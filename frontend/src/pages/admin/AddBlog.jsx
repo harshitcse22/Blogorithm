@@ -102,6 +102,13 @@ const AddBlog = () => {
               <p className='mt-4'>Blog Description</p>
               <div className='max-w-lg h-74 pb-16 sm:pb-10 pt-2 relative'>
                  <div ref={editorRef}></div>
+                 {loading && (
+                  <div className='absolute inset-0 flex
+                    items-center justify-center bg-black/10'>
+                      <div className='w-8 h-8 rounded-full border-2 border-t-white
+                       animate-spin'></div>
+                  </div>
+                 )}
                  <button disabled={loading} type='button' onClick={generateContent}
                  className='absolute bottom-1 right-2 ml-2 text-xs text-white bg-black/70 px-4 py-1.5
                    rounded hover:underline cursor-pointer'>
@@ -135,3 +142,6 @@ const AddBlog = () => {
 }
 
 export default AddBlog
+
+// The rise of AI in modern technology
+// exploring AI in the modern tech

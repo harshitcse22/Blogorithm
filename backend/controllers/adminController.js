@@ -40,7 +40,12 @@ export const getDashboard = async (req, res) =>{
      const recentBlogs = (await Blog.find())
      const blogs = await Blog.countDocuments();
      const comments = await Comment.countDocuments();
-     const drafts = await Blog.countDocuments({isPublished: false})
+     const drafts = await Blog.countDocuments({
+       $or: [
+         {isPublished: false}, 
+         {isPublished: "false"}
+       ]
+     })
      
      const dashboardData = {
       blogs, comments, drafts, recentBlogs

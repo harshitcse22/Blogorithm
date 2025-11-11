@@ -1,6 +1,8 @@
 import fs from 'fs'
 import imagekit from '../configs/imageKit.js';
 import Blog from '../models/Blog.js';
+import { error } from 'console';
+import Comment from '../models/Comment.js';
 
 export const addBlog = async (req, res) =>{
     try{
@@ -42,7 +44,7 @@ export const addBlog = async (req, res) =>{
 
 export const getAllBlogs = async (req, res) =>{
    try{
-     const blogs = await Blog.find({})
+     const blogs = await Blog.find()
      console.log(blogs);
      res.json({success: true, blogs})
    }catch(error){
@@ -67,6 +69,10 @@ export const deleteBlogById = async (req, res) =>{
    try{
      const {id} = req.body;
      await Blog.findByIdAndDelete(id);
+
+      // Delete all comments associate with the blog
+     await Comment.deleteMany({blog: id});
+
      res.json({success: true, message:'Blog deleted successfully'})
    }catch(error){
      res.json({success: false, message: error.message})
@@ -82,8 +88,8 @@ export const togglePublish = async (req, res) =>{
   { new: true } // Returns the updated document
 );
     //  blog.isPublished = !blog.isPublished;
-     await blog.save();
-     res.json({success: true, message: 'Blog status updated'})
+    
+     res.json({success: true, message: 'Blog status updated',blog})
    }catch(error){
      res.json({success: false, message: error.message})
    }

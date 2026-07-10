@@ -26,9 +26,10 @@ export const AppProvider = ({ children }) =>{
      }
 
      useEffect(()=>{
-       fetchBlogs();
+       if(!window.location.pathname.startsWith('/admin')){
+         fetchBlogs();
+       }
        const token = localStorage.getItem('token')
-       console.log(token)
        if(token){
         setToken(token);
         axios.defaults.headers.common['Authorization'] = `${token}`;
